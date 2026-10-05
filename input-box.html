@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preline UI Input Practice</title>
+  <!-- Tailwind Output CSS -->
+  <link href="./src/output.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
+
+  <!-- Input Field (Original Classes Unchanged) -->
+  <div class="max-w-sm w-full space-y-3">
+    <label for="input-base" class="sr-only">Name</label>
+    <input id="input-base" type="text" class="py-2.5 sm:py-3 px-4 rounded-lg block w-full bg-layer border-layer-line sm:text-sm text-foreground placeholder:text-muted-foreground-1 focus:border-primary-focus focus:ring-primary-focus disabled:opacity-50 disabled:pointer-events-none" placeholder="Enter your name">
+  </div>
+  <!-- End Input Field -->
+
+  <!-- Preline UI JavaScript -->
+  <script src="./node_modules/preline/dist/preline.js"></script>
+</body>
+</html>

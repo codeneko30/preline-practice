@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar Example</title>
+  <!-- Tailwind CSS Local Output -->
+  <link href="./src/output.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
+
+  <!-- Main Card Container -->
+  <div class="max-w-2xl w-full bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+    
+    <!-- Header Section -->
+    <header class="w-full">
+      <nav class="w-full flex flex-col gap-y-4">
+        <!-- Brand Name -->
+        <a class="font-semibold text-xl text-foreground focus:outline-hidden" href="#" aria-label="Brand">Brand</a>
+        
+        <!-- Navigation Links with Hover & Active Effects -->
+        <div class="flex items-center gap-x-8 pb-4 border-b border-navbar-line">
+          <a class="text-sm font-medium text-primary-active transition-colors duration-200 focus:outline-hidden" href="#" aria-current="page">Landing</a>
+          <a class="text-sm text-navbar-nav-foreground hover:text-gray-900 transition-colors duration-200 focus:outline-hidden" href="#">Account</a>
+          <a class="text-sm text-navbar-nav-foreground hover:text-gray-900 transition-colors duration-200 focus:outline-hidden" href="#">Work</a>
+          <a class="text-sm text-navbar-nav-foreground hover:text-gray-900 transition-colors duration-200 focus:outline-hidden" href="#">Blog</a>
+        </div>
+      </nav>
+    </header>
+    <!-- End Header Section -->
+
+  </div>
+
+  <!-- Preline UI JavaScript -->
+  <script src="./node_modules/preline/dist/preline.js"></script>
+</body>
+</html>

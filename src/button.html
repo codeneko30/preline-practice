@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preline UI Practice</title>
+  <!-- সিএসএস ফাইল যেহেতু একই ফোল্ডারে আছে (src এর ভেতরে) -->
+  <link href="./output.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 flex items-center justify-center h-screen">
+
+  <div class="text-center">
+    <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700">
+      Button
+    </button>
+  </div>
+
+  <!-- node_modules যেহেতু এক ধাপ বাইরে (প্রজেক্ট রুটে), তাই '../' ব্যবহার করতে হবে -->
+  <script src="../node_modules/preline/dist/preline.js"></script>
+</body>
+</html>

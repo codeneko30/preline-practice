@@ -1,0 +1,425 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Expenses Table</title>
+  <!-- Tailwind CSS Local Output -->
+  <link href="./src/output.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50/50 min-h-screen p-4 sm:p-6 lg:p-8">
+
+  <!-- Card Container -->
+  <div class="max-w-7xl mx-auto bg-white border border-gray-200 rounded-xl shadow-xs overflow-hidden">
+    
+    <!-- Header Section -->
+    <div class="p-6 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <h1 class="text-xl font-semibold text-gray-800">All expenses</h1>
+
+      <div class="flex items-center gap-2">
+        <!-- Export Dropdown -->
+        <div class="hs-dropdown relative [--auto-close:inside] inline-flex">
+          <button id="hs-dropdown-export" type="button" class="hs-dropdown-toggle py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden">
+            <svg class="shrink-0 size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+            Export
+            <svg class="hs-dropdown-open:rotate-180 size-3 text-gray-500 transition-transform" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="hs-dropdown-menu transition-[opacity,margin] duration-all hs-dropdown-open:opacity-100 opacity-0 hidden min-w-48 bg-white shadow-md rounded-lg p-1 space-y-0.5 mt-2 z-10 border border-gray-100" aria-labelledby="hs-dropdown-export">
+            <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer" href="#">
+              <span class="text-emerald-600 font-semibold">📊</span> Excel (.xlsx)
+            </a>
+            <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer" href="#">
+              <span class="text-rose-600 font-semibold">📄</span> PDF (.pdf)
+            </a>
+            <div class="border-t border-gray-200 my-1"></div>
+            <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer" href="#">
+              <svg class="shrink-0 size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copy
+            </a>
+            <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer" href="#">
+              <svg class="shrink-0 size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg> Print
+            </a>
+          </div>
+        </div>
+
+        <!-- Add Expense Button -->
+        <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-gray-900 text-white hover:bg-gray-800 focus:outline-hidden focus:bg-gray-800">
+          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+          Add expense
+        </button>
+      </div>
+    </div>
+    <!-- End Header Section -->
+
+    <!-- Filters and Search Bar -->
+    <div class="p-6 border-b border-gray-200 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <!-- Search Input -->
+      <div class="relative w-full lg:w-80">
+        <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
+          <svg class="shrink-0 size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </div>
+        <input type="text" class="py-2 px-3 ps-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none border" placeholder="Search for something...">
+      </div>
+
+      <!-- Filters Group (Preline Dropdowns Added) -->
+      <div class="flex flex-wrap items-center gap-2">
+        
+        <!-- 1. Category Dropdown -->
+        <div class="hs-dropdown relative [--auto-close:inside] inline-flex">
+          <button id="hs-dropdown-category" type="button" class="hs-dropdown-toggle py-1.5 px-3 inline-flex items-center gap-x-2 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden">
+            Category: All <svg class="hs-dropdown-open:rotate-180 size-3 text-gray-500 transition-transform" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="hs-dropdown-menu transition-[opacity,margin] duration-all hs-dropdown-open:opacity-100 opacity-0 hidden min-w-48 bg-white shadow-md rounded-lg p-1 space-y-0.5 mt-2 z-10 border border-gray-100" aria-labelledby="hs-dropdown-category">
+            <label class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              <input type="checkbox" class="shrink-0 rounded border-gray-300 text-gray-800 focus:ring-gray-800 size-4"> Software
+            </label>
+            <label class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              <input type="checkbox" class="shrink-0 rounded border-gray-300 text-gray-800 focus:ring-gray-800 size-4"> Transport
+            </label>
+            <label class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              <input type="checkbox" class="shrink-0 rounded border-gray-300 text-gray-800 focus:ring-gray-800 size-4"> Food
+            </label>
+            <label class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              <input type="checkbox" class="shrink-0 rounded border-gray-300 text-gray-800 focus:ring-gray-800 size-4"> Shopping
+            </label>
+            <label class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              <input type="checkbox" class="shrink-0 rounded border-gray-300 text-gray-800 focus:ring-gray-800 size-4"> Entertainment
+            </label>
+            <label class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              <input type="checkbox" class="shrink-0 rounded border-gray-300 text-gray-800 focus:ring-gray-800 size-4"> Subscription
+            </label>
+            <label class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              <input type="checkbox" class="shrink-0 rounded border-gray-300 text-gray-800 focus:ring-gray-800 size-4"> Utilities
+            </label>
+          </div>
+        </div>
+
+        <!-- 2. Status Dropdown -->
+        <div class="hs-dropdown relative [--auto-close:inside] inline-flex">
+          <button id="hs-dropdown-status" type="button" class="hs-dropdown-toggle py-1.5 px-3 inline-flex items-center gap-x-2 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden">
+            Status <svg class="hs-dropdown-open:rotate-180 size-3 text-gray-500 transition-transform" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="hs-dropdown-menu transition-[opacity,margin] duration-all hs-dropdown-open:opacity-100 opacity-0 hidden min-w-48 bg-white shadow-md rounded-lg p-1 space-y-0.5 mt-2 z-10 border border-gray-100" aria-labelledby="hs-dropdown-status">
+            <label class="flex items-center justify-between py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              <span class="flex items-center gap-x-3"><input type="checkbox" class="shrink-0 rounded border-gray-300 text-gray-800 focus:ring-gray-800 size-4"> Paid</span>
+              <span class="size-2 rounded-full bg-emerald-500"></span>
+            </label>
+            <label class="flex items-center justify-between py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              <span class="flex items-center gap-x-3"><input type="checkbox" class="shrink-0 rounded border-gray-300 text-gray-800 focus:ring-gray-800 size-4"> Pending</span>
+              <span class="size-2 rounded-full bg-amber-500"></span>
+            </label>
+            <label class="flex items-center justify-between py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              <span class="flex items-center gap-x-3"><input type="checkbox" class="shrink-0 rounded border-gray-300 text-gray-800 focus:ring-gray-800 size-4"> Refunded</span>
+              <span class="size-2 rounded-full bg-cyan-500"></span>
+            </label>
+            <label class="flex items-center justify-between py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              <span class="flex items-center gap-x-3"><input type="checkbox" class="shrink-0 rounded border-gray-300 text-gray-800 focus:ring-gray-800 size-4"> Failed</span>
+              <span class="size-2 rounded-full bg-rose-500"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 3. Date Dropdown -->
+        <div class="hs-dropdown relative [--auto-close:inside] inline-flex">
+          <button id="hs-dropdown-date" type="button" class="hs-dropdown-toggle py-1.5 px-3 inline-flex items-center gap-x-2 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden">
+            Date <svg class="hs-dropdown-open:rotate-180 size-3 text-gray-500 transition-transform" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="hs-dropdown-menu transition-[opacity,margin] duration-all hs-dropdown-open:opacity-100 opacity-0 hidden min-w-48 bg-white shadow-md rounded-lg p-1 space-y-0.5 mt-2 z-10 border border-gray-100" aria-labelledby="hs-dropdown-date">
+            <label class="flex items-center justify-between py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              Last 7 days <input type="radio" name="date-filter" class="shrink-0 border-gray-300 text-gray-800 focus:ring-gray-800 size-4">
+            </label>
+            <label class="flex items-center justify-between py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer bg-gray-50">
+              This month <input type="radio" name="date-filter" checked class="shrink-0 border-gray-300 text-gray-800 focus:ring-gray-800 size-4">
+            </label>
+            <label class="flex items-center justify-between py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              Last month <input type="radio" name="date-filter" class="shrink-0 border-gray-300 text-gray-800 focus:ring-gray-800 size-4">
+            </label>
+            <label class="flex items-center justify-between py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              This year <input type="radio" name="date-filter" class="shrink-0 border-gray-300 text-gray-800 focus:ring-gray-800 size-4">
+            </label>
+          </div>
+        </div>
+
+        <!-- 4. Method Dropdown -->
+        <div class="hs-dropdown relative [--auto-close:inside] inline-flex">
+          <button id="hs-dropdown-method" type="button" class="hs-dropdown-toggle py-1.5 px-3 inline-flex items-center gap-x-2 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden">
+            Method <svg class="hs-dropdown-open:rotate-180 size-3 text-gray-500 transition-transform" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="hs-dropdown-menu transition-[opacity,margin] duration-all hs-dropdown-open:opacity-100 opacity-0 hidden min-w-48 bg-white shadow-md rounded-lg p-1 space-y-0.5 mt-2 z-10 border border-gray-100" aria-labelledby="hs-dropdown-method">
+            <label class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              <input type="checkbox" class="shrink-0 rounded border-gray-300 text-gray-800 focus:ring-gray-800 size-4"> Apple Pay
+            </label>
+            <label class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              <input type="checkbox" class="shrink-0 rounded border-gray-300 text-gray-800 focus:ring-gray-800 size-4"> Google Pay
+            </label>
+            <label class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              <input type="checkbox" class="shrink-0 rounded border-gray-300 text-gray-800 focus:ring-gray-800 size-4"> PayPal
+            </label>
+            <label class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              <input type="checkbox" class="shrink-0 rounded border-gray-300 text-gray-800 focus:ring-gray-800 size-4"> Credit card
+            </label>
+          </div>
+        </div>
+
+        <!-- 5. Paid by Dropdown -->
+        <div class="hs-dropdown relative [--auto-close:inside] inline-flex">
+          <button id="hs-dropdown-paidby" type="button" class="hs-dropdown-toggle py-1.5 px-3 inline-flex items-center gap-x-2 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden">
+            Paid by <svg class="hs-dropdown-open:rotate-180 size-3 text-gray-500 transition-transform" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="hs-dropdown-menu transition-[opacity,margin] duration-all hs-dropdown-open:opacity-100 opacity-0 hidden min-w-48 bg-white shadow-md rounded-lg p-1 space-y-0.5 mt-2 z-10 border border-gray-100" aria-labelledby="hs-dropdown-paidby">
+            <label class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              <input type="checkbox" class="shrink-0 rounded border-gray-300 text-gray-800 focus:ring-gray-800 size-4"> Alex Morgan
+            </label>
+            <label class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              <input type="checkbox" class="shrink-0 rounded border-gray-300 text-gray-800 focus:ring-gray-800 size-4"> Priya Shah
+            </label>
+            <label class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+              <input type="checkbox" class="shrink-0 rounded border-gray-300 text-gray-800 focus:ring-gray-800 size-4"> Marco Silva
+            </label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- End Filters -->
+
+    <!-- Table Section -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="py-3 px-4 pr-0">
+              <div class="flex items-center h-5">
+                <input id="hs-table-checkbox-all" type="checkbox" class="border-gray-300 rounded-sm text-blue-600 focus:ring-blue-500">
+              </div>
+            </th>
+            <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Payment</th>
+            <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Amount</th>
+            <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Merchant</th>
+            <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Date</th>
+            <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Paid by</th>
+            <th scope="col" class="px-end py-3 text-end text-xs font-medium text-gray-500 uppercase"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 bg-white">
+          
+          <!-- Row 1 -->
+          <tr>
+            <td class="py-4 px-4 pr-0">
+              <div class="flex items-center h-5">
+                <input type="checkbox" class="border-gray-300 rounded-sm text-blue-600 focus:ring-blue-500">
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+              <div class="flex items-center gap-3">
+                <div class="size-8 bg-gray-100 rounded-md flex items-center justify-center border border-gray-200">📄</div>
+                <span>Apple Pay</span>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">$45.00</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 flex items-center gap-2">
+              <span class="text-orange-500 font-bold">☁</span> SoundCloud
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Nov 22, 2026 · 9:41 AM</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 flex items-center gap-2">
+              <span class="size-6 rounded-full bg-gray-300 flex items-center justify-center text-xs font-semibold">A</span> Alex Morgan
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+              <!-- Action Dropdown -->
+              <div class="hs-dropdown relative [--placement:bottom-right] inline-flex">
+                <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-white text-gray-500 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">
+                  <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                </button>
+                <div class="hs-dropdown-menu transition-[opacity,margin] duration-all hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 bg-white shadow-md rounded-lg p-1 space-y-0.5 mt-2 z-10 border border-gray-100">
+                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer" href="#">
+                    <svg class="shrink-0 size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg> View receipt
+                  </a>
+                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer" href="#">
+                    <svg class="shrink-0 size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg> Edit expense
+                  </a>
+                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer" href="#">
+                    <svg class="shrink-0 size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Duplicate
+                  </a>
+                  <div class="border-t border-gray-200 my-1"></div>
+                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-rose-600 hover:bg-rose-50 cursor-pointer" href="#">
+                    <svg class="shrink-0 size-4 text-rose-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg> Delete
+                  </a>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Row 2 -->
+          <tr>
+            <td class="py-4 px-4 pr-0">
+              <div class="flex items-center h-5">
+                <input type="checkbox" class="border-gray-300 rounded-sm text-blue-600 focus:ring-blue-500">
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+              <div class="flex items-center gap-3">
+                <div class="size-8 bg-gray-100 rounded-md flex items-center justify-center border border-gray-200">💳</div>
+                <span>Mastercard</span>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">$23.40</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Metro Energy</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Nov 21, 2026 · 7:12 PM</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 flex items-center gap-2">
+              <span class="size-6 rounded-full bg-gray-300 flex items-center justify-center text-xs font-semibold">P</span> Priya Shah
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+              <!-- Action Dropdown -->
+              <div class="hs-dropdown relative [--placement:bottom-right] inline-flex">
+                <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-white text-gray-500 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">
+                  <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                </button>
+                <div class="hs-dropdown-menu transition-[opacity,margin] duration-all hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 bg-white shadow-md rounded-lg p-1 space-y-0.5 mt-2 z-10 border border-gray-100">
+                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer" href="#">
+                    <svg class="shrink-0 size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg> View receipt
+                  </a>
+                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer" href="#">
+                    <svg class="shrink-0 size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg> Edit expense
+                  </a>
+                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer" href="#">
+                    <svg class="shrink-0 size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Duplicate
+                  </a>
+                  <div class="border-t border-gray-200 my-1"></div>
+                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-rose-600 hover:bg-rose-50 cursor-pointer" href="#">
+                    <svg class="shrink-0 size-4 text-rose-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg> Delete
+                  </a>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Row 3 -->
+          <tr>
+            <td class="py-4 px-4 pr-0">
+              <div class="flex items-center h-5">
+                <input type="checkbox" class="border-gray-300 rounded-sm text-blue-600 focus:ring-blue-500">
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+              <div class="flex items-center gap-3">
+                <div class="size-8 bg-gray-100 rounded-md flex items-center justify-center border border-gray-200">📄</div>
+                <span>Apple Pay</span>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">$18.60</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Cursor</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Nov 20, 2026 · 8:05 AM</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 flex items-center gap-2">
+              <span class="size-6 rounded-full bg-gray-300 flex items-center justify-center text-xs font-semibold">A</span> Alex Morgan
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+              <!-- Action Dropdown -->
+              <div class="hs-dropdown relative [--placement:bottom-right] inline-flex">
+                <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-white text-gray-500 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">
+                  <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                </button>
+                <div class="hs-dropdown-menu transition-[opacity,margin] duration-all hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 bg-white shadow-md rounded-lg p-1 space-y-0.5 mt-2 z-10 border border-gray-100">
+                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer" href="#">
+                    <svg class="shrink-0 size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg> View receipt
+                  </a>
+                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer" href="#">
+                    <svg class="shrink-0 size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg> Edit expense
+                  </a>
+                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer" href="#">
+                    <svg class="shrink-0 size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Duplicate
+                  </a>
+                  <div class="border-t border-gray-200 my-1"></div>
+                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-rose-600 hover:bg-rose-50 cursor-pointer" href="#">
+                    <svg class="shrink-0 size-4 text-rose-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg> Delete
+                  </a>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Row 4 -->
+          <tr>
+            <td class="py-4 px-4 pr-0">
+              <div class="flex items-center h-5">
+                <input type="checkbox" class="border-gray-300 rounded-sm text-blue-600 focus:ring-blue-500">
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+              <div class="flex items-center gap-3">
+                <div class="size-8 bg-gray-100 rounded-md flex items-center justify-center border border-gray-200">💳</div>
+                <span>Mastercard</span>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">$128.75</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Amazon</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Nov 19, 2026 · 4:38 PM</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 flex items-center gap-2">
+              <span class="size-6 rounded-full bg-gray-300 flex items-center justify-center text-xs font-semibold">M</span> Marco Silva
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+              <!-- Action Dropdown -->
+              <div class="hs-dropdown relative [--placement:bottom-right] inline-flex">
+                <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-white text-gray-500 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">
+                  <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                </button>
+                <div class="hs-dropdown-menu transition-[opacity,margin] duration-all hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 bg-white shadow-md rounded-lg p-1 space-y-0.5 mt-2 z-10 border border-gray-100">
+                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer" href="#">
+                    <svg class="shrink-0 size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg> View receipt
+                  </a>
+                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer" href="#">
+                    <svg class="shrink-0 size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg> Edit expense
+                  </a>
+                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 cursor-pointer" href="#">
+                    <svg class="shrink-0 size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Duplicate
+                  </a>
+                  <div class="border-t border-gray-200 my-1"></div>
+                  <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-rose-600 hover:bg-rose-50 cursor-pointer" href="#">
+                    <svg class="shrink-0 size-4 text-rose-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg> Delete
+                  </a>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+    <!-- End Table Section -->
+
+    <!-- Footer Pagination -->
+    <div class="p-4 border-t border-gray-200 flex items-center justify-between">
+      <div class="text-sm text-gray-500">
+        Showing <span class="font-medium text-gray-800">1-8</span> of <span class="font-medium text-gray-800">248</span> expenses &nbsp;&nbsp;|&nbsp;&nbsp; Page total <span class="font-medium text-gray-800">$385.72</span>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button type="button" class="size-8 inline-flex justify-center items-center rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 disabled:opacity-50">
+          ‹
+        </button>
+        <button type="button" class="size-8 inline-flex justify-center items-center rounded-lg bg-gray-900 text-white text-sm font-medium">
+          1
+        </button>
+        <span class="text-sm text-gray-500">of 31</span>
+        <button type="button" class="size-8 inline-flex justify-center items-center rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50">
+          ›
+        </button>
+      </div>
+    </div>
+    <!-- End Footer Pagination -->
+
+  </div>
+  <!-- End Card Container -->
+
+  <!-- Preline UI JavaScript -->
+  <script src="./node_modules/preline/dist/preline.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        if (window.HSStaticMethods) {
+          window.HSStaticMethods.autoInit();
+        }
+      }, 100);
+    });
+  </script>
+</body>
+</html>
